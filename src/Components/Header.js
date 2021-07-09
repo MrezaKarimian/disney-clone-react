@@ -1,34 +1,37 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import styled from 'styled-components'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilm, faHome, faPlus, faSearch, faStar, faVideo,  } from '@fortawesome/free-solid-svg-icons';
+import LogoSrc from "images/logo.svg"
 
 function Header() {
     return (
         <Nav>
-            <Logo src="/images/logo.svg"/>
+            <Logo src={LogoSrc} alt=""/>
             <NavMenu>
                 <a href="">
-                    <img src="/images/home-icon.svg"alt="" />
+                    <FontAwesomeIcon style={{height: "20px"}} icon={ faHome }/>
                     <span>HOME</span>
                 </a>
                 <a href="">
-                    <img src="/images/search-icon.svg" alt=""/>
+                    <FontAwesomeIcon style={{height: "20px"}} icon={ faSearch }/>
                     <span>SEARCH</span>
                 </a>
                 <a href="">
-                    <img src="/images/watchlist-icon.svg" alt=""/>
+                    <FontAwesomeIcon style={{height: "20px"}} icon={ faPlus }/>
                     <span>WATCHLIST</span>
                 </a>
                 <a href="">
-                    <img src="/images/original-icon.svg" alt=""/>
+                    <FontAwesomeIcon style={{height: "20px"}} icon={ faStar }/>
                     <span>ORIGINALS</span>
                 </a>
                 <a href="">
-                    <img src="/images/movie-icon.svg" alt=""/>
+                    <FontAwesomeIcon style={{height: "20px"}} icon={ faVideo }/>
                     <span>MOVIES</span>
                 </a>
                 <a href="">
-                    <img src="/images/series-icon.svg" alt=""/>
+                    <FontAwesomeIcon style={{height: "20px"}} icon={ faFilm }/>
                     <span>SERIES</span>
                 </a>
 
@@ -48,11 +51,11 @@ const Nav = styled.nav`
     display: flex;
     align-items: center;
     padding: 0 36px;
+    overflow-x: hidden;
 `
 
 const Logo = styled.img`
     width: 80px;
-
 `
 
 const NavMenu = styled.div`
@@ -67,13 +70,12 @@ const NavMenu = styled.div`
         cursor: pointer;
         color: white;
         text-decoration: none;
-        img {
-            height: 20px;
-        }
+        justify-content: space-between;
         span{
             font-size: 13px;
             letter-spacing: 1.42px;
             position: relative;
+            margin-left: 5px;
             &:after{
                 content:"";
                 height: 2px;
