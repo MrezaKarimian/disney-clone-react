@@ -70,7 +70,7 @@ const Wrap = styled.div`
         transition: all 300ms ease;
 
         &:hover {
-            border:4px solid rgba(240 , 249, 249, 0.8);
+            border:4px solid rgba(240 , 249, 249, 0.5);
         }
     }
 `
