@@ -1,6 +1,7 @@
 /* eslint-disable array-callback-return */
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { selectMovies } from "features/movie/movieSlice";
 import { useSelector } from "react-redux";
 
@@ -12,12 +13,13 @@ function Movies() {
       <h4>Recommended For You</h4>
       <Content>
         {movies &&
-          movies.map((movie)=> (
-            <Wrap key={movie.id}>
-              <img src={movie.cardImg} alt="" />
-            </Wrap>
-            ))
-        }
+          movies.map((movie) => (
+            <Link key={movie.id} to={`/detail/${movie.id}`}>
+              <Wrap>
+                <img src={movie.cardImg} alt="" />
+              </Wrap>
+            </Link>
+          ))}
       </Content>
     </Container>
   );

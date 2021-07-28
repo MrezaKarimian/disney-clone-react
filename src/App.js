@@ -1,24 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./App.css";
 import Header from "./Components/Header"; 
 import Home from "./Components/Home";
 import Detail from "Components/Detail";
 import Login from "Components/Login";
-// import db from "./firebase";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
-  // const [moive , setMovie] = useState();
-
-  // useEffect(()=> {
-  //   db.collection('movie').onSnapshot(snapshot => {
-  //     console.log(snapshot.docs.map(doc => doc.data()))
-  //     // setMovie(snapshot.docs.map(doc => doc.data()))
-  //   })
-  // }, [])
-
-
   return (
     <div className="App">
       <Router>
@@ -27,7 +16,7 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
-          <Route path="/detail">
+          <Route path="/detail/:id">
             <Detail />
           </Route>
           <Route path="/">

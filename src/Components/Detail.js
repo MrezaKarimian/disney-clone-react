@@ -1,21 +1,42 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-template-curly-in-string */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import PlayBtnSrc from "images/play-icon-black.png";
 import TrailerBtnSrc from "images/play-icon-white.png";
-import BackgroundSrc from "images/login-background.jpg";
-import GroupIconSrc from "images/group-icon.png"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus} from '@fortawesome/free-solid-svg-icons';
+import GroupIconSrc from "images/group-icon.png";
+import db from "../firebase";
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function Detail() {
+  const { id } = useParams();
+  const [ movie, setMovie] = useState();
+
+    useEffect(() => {
+      db.collection("movies")
+        .doc(id)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            setMovie(doc.data());
+            console.log(movie);
+          } else {
+          }
+        });
+    }, []);
+  
+  
   return (
     <Container>
-      <Background>
-        <img src={BackgroundSrc} alt="" />
+      {movie && (
+        <>
+        <Background>
+        <img src={movie.backgroundImg} alt="" />
       </Background>
       <ImageTitle>
-        <img src="" alt="" />
+        <img src={movie.titleImg} alt="" />
       </ImageTitle>
       <Controls>
         <PlayBtn>
@@ -27,18 +48,23 @@ function Detail() {
           <span>TRAILER</span>
         </TrailerBtn>
         <AddBtn>
-          <FontAwesomeIcon style={{ fontSize: "20px" , color: 'rgb(${249}, ${249}, ${249})'}} icon={faPlus} />
+          <FontAwesomeIcon
+            style={{ fontSize: "20px", color: `rgb(${249}, ${249}, ${249})` }}
+            icon={faPlus}
+          />
         </AddBtn>
         <GroupWatchBtn>
           <img src={GroupIconSrc} alt="" />
         </GroupWatchBtn>
       </Controls>
       <Subtitle>
-          2018 - 7m - Family , Kids , Animation
-      </Subtitle>
+        {movie.subTitle}
+        </Subtitle>
       <Description>
-          Officia dolore laboris consectetur sunt. Reprehenderit ut veniam aute Lorem. Sit ex laborum ullamco adipisicing reprehenderit ea reprehenderit irure quis qui esse eiusmod sint. Irure quis mollit labore et laborum adipisicing fugiat ad do irure id do aute ad. Quis ad incididunt fugiat id elit proident. Consequat reprehenderit amet aliquip nulla mollit velit et quis.
+        {movie.description}
       </Description>
+        </>
+      )}
     </Container>
   );
 }
@@ -49,7 +75,7 @@ const Container = styled.div`
   min-height: calc(100vh - 70px);
   padding: 0 calc(3.5vw + 5px);
   position: relative;
-`
+`;
 
 const Background = styled.div`
   position: fixed;
@@ -65,7 +91,7 @@ const Background = styled.div`
     height: 100%;
     object-fit: cover;
   }
-`
+`;
 
 const ImageTitle = styled.div`
   height: 30vh;
@@ -78,12 +104,12 @@ const ImageTitle = styled.div`
     height: 100%;
     object-fit: contain;
   }
-`
+`;
 
 const Controls = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 const PlayBtn = styled.button`
   border-radius: 4px;
   font-size: 15px;
@@ -100,49 +126,49 @@ const PlayBtn = styled.button`
   &:hover {
     background: rgb(198, 198, 198);
   }
-`
+`;
 const TrailerBtn = styled(PlayBtn)`
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgb(249, 249, 249);
   color: rgb(249, 249, 249);
 
   &:hover {
-    background: rgba(198, 198, 198 , 0.2);
+    background: rgba(198, 198, 198, 0.2);
   }
-`
+`;
 const AddBtn = styled.button`
-    margin-right: 16px;
-    width:44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    border: 2px solid rgb(249, 249, 249);
-    background-color: rgba(0, 0, 0, 0.5);
-    cursor: pointer;
+  margin-right: 16px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid rgb(249, 249, 249);
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
 
-    &:hover {
-    background: rgba(198, 198, 198 , 0.2);
+  &:hover {
+    background: rgba(198, 198, 198, 0.2);
   }
-`
+`;
 const GroupWatchBtn = styled(AddBtn)`
-    background-color:rgb(0, 0, 0);
-    &:hover {
-    background: rgba(198, 198, 198 , 0.2);
+  background-color: rgb(0, 0, 0);
+  &:hover {
+    background: rgba(198, 198, 198, 0.2);
   }
-`
+`;
 
 const Subtitle = styled.div`
-    color: rgb(249 , 249 ,249);
-    font-size: 15px;
-    min-height: 20px;
-    margin-top: 26px;
-`
+  color: rgb(249, 249, 249);
+  font-size: 15px;
+  min-height: 20px;
+  margin-top: 26px;
+`;
 const Description = styled.div`
-    line-height: 1.4;
-    font-size: 24px;
-    margin-top: 16px;
-    color: rgb(249 , 249 ,249);
-    max-width: 600px;
-`
+  line-height: 1.4;
+  font-size: 24px;
+  margin-top: 16px;
+  color: rgb(249, 249, 249);
+  max-width: 600px;
+`;
