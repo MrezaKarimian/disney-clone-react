@@ -3,13 +3,36 @@ import styled from "styled-components";
 import BackgroundSrc from "images/login-background.jpg";
 import LogoOneSrc from "images/cta-logo-one.svg";
 import LogoTwoSrc from "images/cta-logo-two.png";
+import { auth, provider } from "../firebase"
+import { useDispatch } from "react-redux"
+import { setUserLogin } from "features/user/userSlice"
+import { useHistory } from "react-router-dom";
 
-function Login() {
+
+function Login(props) {
+  console.log(props.signOut)
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const signIn =()=> {
+    auth.signInWithPopup(provider)
+    .then((result)=>{  
+        let user = result.user;
+        console.log(result)
+        dispatch(setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL
+        }))
+      history.push("/home")
+    })
+  }
+
   return (
     <Container>
       <Content>
         <LogoOne src={LogoOneSrc} alt="" />
-        <SignupBtn>SIGN UP</SignupBtn>
+        <SignupBtn onClick={signIn}>SIGN IN</SignupBtn>
         <Description>
             Pariatur irure deserunt esse do non eu aute. Minim ex exercitation mollit deserunt eu labore est ullamco magna in. In aute incididunt duis ullamco et cillum ea amet ullamco.
         </Description>

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,32 +11,50 @@ import {
   faVideo,
 } from "@fortawesome/free-solid-svg-icons";
 import LogoSrc from "images/logo.svg";
-import { selectUserName, selectUserPhoto , setUserLogin , setSignOut } from "features/user/userSlice";
-import { useSelector , useDispatch } from "react-redux";
-import { auth, provider } from "../firebase"
+import {
+  selectUserName,
+  selectUserPhoto,
+  setSignOut,
+  setUserLogin,
+} from "features/user/userSlice";
+import { useSelector } from "react-redux";
+import { auth } from "../firebase";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function Header() {
   const userName = useSelector(selectUserName);
   const userPhoto = useSelector(selectUserPhoto);
-
   const dispatch = useDispatch();
-  const signIn =()=> {
-    auth.signInWithPopup(provider)
-    .then((result)=>{  
-        console.log(result.user);
-        let user = result.user;
-        dispatch(setUserLogin({
+  const history = useHistory();
+
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        dispatch(
+          setUserLogin({
             name: user.displayName,
             email: user.email,
-            photo: user.photoURL
-        }))
-    })
-  }
+            photo: user.photoURL,
+          })
+        );
+        history.push("/home");
+      }
+    });
+  }, []);
+
+  const signOut = () => {
+    auth.signOut().then(() => {
+      dispatch(setSignOut());
+      history.push("/");
+    });
+  };
+
   return (
     <Nav>
       <Logo src={LogoSrc} alt="" />
       {!userName ? (
-        <Login onClick={signIn}>Login</Login>
+        ""
       ) : (
         <>
           <NavMenu>
@@ -65,14 +83,13 @@ function Header() {
               <span>SERIES</span>
             </a>
           </NavMenu>
-          <UserImg />
+          <UserName>{userName}</UserName>
+          <UserImg onClick={signOut} src={userPhoto} />
         </>
       )}
-
     </Nav>
   );
 }
-
 
 export default Header;
 
@@ -134,23 +151,17 @@ const UserImg = styled.img`
   height: 48px;
   border-radius: 50%;
   cursor: pointer;
+  transition: all 250ms ease cubic-bezier(1, 0, 0, 1);
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `;
 
-const Login = styled.button`
-    margin-left: auto;
-    color: #f9f9f9;
-    border: 1px solid #f9f9f9;
-    padding: 8px 16px;
-    border-radius: 4px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    background-color: rgba(0, 0, 0, 0.6);
-    transition: all 0.2 ease;
-    cursor: pointer;
-
-    &:hover{
-        background-color: #f9f9f9;
-        color: #000;
-        border-color: transparent;
-    }   
-`
+const UserName = styled.text`
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 15px;
+  margin-right: 10px;
+  color: rgb(249, 249, 249);
+`;

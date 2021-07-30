@@ -5,25 +5,52 @@ import ViewersSrc2 from 'images/viewers-marvel.png'
 import ViewersSrc3 from 'images/viewers-national.png'
 import ViewersSrc4 from 'images/viewers-pixar.png'
 import ViewersSrc5 from 'images/viewers-starwars.png'
+import videoDisney from "videos/1564674844-disney.mp4"
+import videoMarvel from "videos/1564676115-marvel.mp4"
+import videoNat from "videos/1564676296-national-geographic.mp4"
+import videoPixar from "videos/1564676714-pixar.mp4"
+import videoStart from "videos/1608229455-star-wars.mp4"
+
 
 
 function Viewers() {
+    const stopVideo =(e)=> {
+        e.target.pause();
+    }
+    const playVideo =(e)=>{
+        e.target.play();
+    }
     return (
         <Container>
             <Wrap>
                 <img src={ViewersSrc1} alt="" />
+                <Video onMouseOver={playVideo} onMouseOut={stopVideo} loop preload="none" muted >
+                    <source src={videoDisney} type="video/mp4"/>
+                </Video>
             </Wrap>
             <Wrap>
                 <img src={ViewersSrc2} alt="" />
+                <Video onMouseOver={playVideo} onMouseOut={stopVideo} loop preload="none" muted >
+                    <source src={videoMarvel} type="video/mp4"/>
+                </Video>
             </Wrap>
             <Wrap>
                 <img src={ViewersSrc3} alt="" />
+                <Video onMouseOver={playVideo} onMouseOut={stopVideo} loop preload="none" muted >
+                    <source src={videoNat} type="video/mp4"/>
+                </Video>
             </Wrap>
             <Wrap>
                 <img src={ViewersSrc4} alt="" />
+                <Video onMouseOver={playVideo} onMouseOut={stopVideo} loop preload="none" muted >
+                    <source src={videoPixar} type="video/mp4"/>
+                </Video>
             </Wrap>
             <Wrap>
                 <img src={ViewersSrc5} alt="" />
+                <Video onMouseOver={playVideo} onMouseOut={stopVideo} loop preload="none" muted >
+                    <source src={videoStart} type="video/mp4"/>
+                </Video>
             </Wrap>
         </Container>
     )
@@ -40,6 +67,7 @@ const Container = styled.div`
 `
 
 const Wrap = styled.div`
+    position: relative;
     border: 3px solid rgb(249, 249, 249 ,0.1);
     border-radius: 10px;
     cursor: pointer;
@@ -58,5 +86,19 @@ const Wrap = styled.div`
         rgb(0 0 0 / 72%) 0px 30px 22px -10px;
         transform: scale(1.05);
         border-color: rgba(249 , 249 ,249 , 0.5);
+    }
+`
+const Video = styled.video`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0%;
+    top: 0%;
+    object-fit: cover;
+    opacity: 0;
+    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
+
+    &:hover {
+        opacity: 0.8;
     }
 `
