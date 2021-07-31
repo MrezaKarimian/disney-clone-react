@@ -56,6 +56,7 @@ const Carousel = styled(Slider)`
 
   button {
     z-index: 1;
+    opacity: 0.8;
   }
 `;
 const Wrap = styled.div`

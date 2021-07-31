@@ -32,7 +32,7 @@ function Login(props) {
     <Container>
       <Content>
         <LogoOne src={LogoOneSrc} alt="" />
-        <SignupBtn onClick={signIn}>SIGN IN</SignupBtn>
+        <SignupBtn onClick={signIn}>sign in</SignupBtn>
         <Description>
             Pariatur irure deserunt esse do non eu aute. Minim ex exercitation mollit deserunt eu labore est ullamco magna in. In aute incididunt duis ullamco et cillum ea amet ullamco.
         </Description>
@@ -96,6 +96,7 @@ const SignupBtn = styled.a`
     font-size: 18px;
     transform: all 250ms ;
     letter-spacing: 1.5px;
+    text-transform: uppercase;
 
     &:hover{
         background-color: #0483ee ;

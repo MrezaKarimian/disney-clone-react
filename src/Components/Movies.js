@@ -4,14 +4,24 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { selectMovies } from "features/movie/movieSlice";
 import { useSelector } from "react-redux";
+import Slider from "react-slick";
 
 function Movies() {
-  const movies = useSelector(selectMovies);
+  const movies = useSelector(selectMovies)
+
+  let settings = {
+    dots: false,
+    infinite: true,
+    speed: 1500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    autoplay: true,
+  };
 
   return (
     <Container>
       <h4>Recommended For You</h4>
-      <Content>
+      <Carousel {...settings}>
         {movies &&
           movies.map((movie) => (
             <Link key={movie.id} to={`/detail/${movie.id}`}>
@@ -20,23 +30,43 @@ function Movies() {
               </Wrap>
             </Link>
           ))}
-      </Content>
+      </Carousel>
     </Container>
   );
 }
 
 export default Movies;
 
-const Container = styled.div``;
-const Content = styled.div`
-  display: grid;
-  grid-gap: 25px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+const Container = styled.div`
+  h4 {
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgba(249, 249, 249, 0.8);
+    overflow: hidden;
+  }
 `;
+
+const Carousel = styled(Slider)`
+  width: 100%;
+  height: 100%;
+
+  button {
+    z-index: 1;
+    opacity: 0.4;
+  }
+`;
+
+// const Content = styled.div`
+//   display: grid;
+//   grid-gap: 25px;
+//   grid-template-columns: repeat(4, minmax(0, 1fr));
+// `;
 
 const Wrap = styled.div`
   border-radius: 10px;
   overflow: hidden;
+  margin: 10px 10px;
   cursor: pointer;
   border: 3px solid rgb(249, 249, 249, 0.1);
   box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
