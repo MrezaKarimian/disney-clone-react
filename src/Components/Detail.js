@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function Detail() {
-  const { id } = useParams();
+  const { id } = useParams();  
   const [ movie, setMovie] = useState();
 
     useEffect(() => {

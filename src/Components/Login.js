@@ -9,8 +9,7 @@ import { setUserLogin } from "features/user/userSlice"
 import { useHistory } from "react-router-dom";
 
 
-function Login(props) {
-  console.log(props.signOut)
+function Login() {
   const dispatch = useDispatch();
   const history = useHistory();
 

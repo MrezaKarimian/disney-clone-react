@@ -90,6 +90,7 @@ const Wrap = styled.div`
 `
 const Video = styled.video`
     position: absolute;
+    border-radius: 7px;
     width: 100%;
     height: 100%;
     left: 0%;
